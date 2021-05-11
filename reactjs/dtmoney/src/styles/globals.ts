@@ -8,7 +8,8 @@ export const GlobalStyles = createGlobalStyle`
   --blue-light: #6933ff;
   --text-title: #363f5f;
   --text-body: #969cb3;
-  -shape: #fff;
+  --shape: #fff;
+  --green: #33cc95;
 }
 
   * {
@@ -28,7 +29,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    background: var(----background);
+    background: var(--background);
     -webkit-font-smoothing: antialiased;
   }
 
