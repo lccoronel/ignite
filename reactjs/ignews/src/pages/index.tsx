@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Local | ig.news</title>
+        <title>Home | ig.news</title>
       </Head>
       <h1>Ola Lucas</h1>
     </>
