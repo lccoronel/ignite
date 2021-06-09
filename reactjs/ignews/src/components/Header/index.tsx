@@ -10,7 +10,7 @@ export function Header() {
 
         <nav>
           <Active activeClassName={styles.active} href="/">
-            <a className={styles.active}>Nome</a>
+            <a className={styles.active}>Home</a>
           </Active>
           <Active activeClassName={styles.active} href="/posts">
             <a>Posts</a>
