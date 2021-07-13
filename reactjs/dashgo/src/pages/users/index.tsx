@@ -25,7 +25,7 @@ import { Pagination } from "../../components/Pagination";
 import { useQuery } from "react-query";
 
 export default function UsersList() {
-  const { data, isLoading, error } = useQuery('users', async () => {
+  const { data, isLoading, isFetching, error } = useQuery('users', async () => {
     const response = await fetch('https://localhost:3000/api/users');
     const data = await response.json();
 
@@ -61,7 +61,10 @@ export default function UsersList() {
 
         <Box flex="1" borderRadius={8} bg="gray.800" p="8">
           <Flex mb="8" justify="space-between" align="center">
-            <Heading size="lg" fontWeight="normal">Usuarios</Heading>
+            <Heading size="lg" fontWeight="normal">
+              Usuarios
+              {!isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" />}
+            </Heading>
 
             <Link href="/users/create" passHref>
               <Button 
