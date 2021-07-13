@@ -22,30 +22,11 @@ import Link from "next/link";
 import { Header } from "../../components/Header";
 import { SideBar } from "../../components/SideBar";
 import { Pagination } from "../../components/Pagination";
-import { useQuery } from "react-query";
+import { api } from "../../services/api";
+import { useUsers } from "../../services/hooks/useUsers";
 
 export default function UsersList() {
-  const { data, isLoading, isFetching, error } = useQuery('users', async () => {
-    const response = await fetch('https://localhost:3000/api/users');
-    const data = await response.json();
-
-    const users = data.users.map(user => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        })
-      }
-    })
-    
-    return users;
-  }, {
-    staleTime: 1000 * 5
-  });
+  const { data, isLoading, isFetching, error } = useUsers();
 
   const isWideVersion = useBreakpointValue({
     base: false,
