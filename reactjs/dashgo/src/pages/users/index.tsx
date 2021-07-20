@@ -23,15 +23,18 @@ import NextLink from "next/link";
 import { Header } from "../../components/Header";
 import { SideBar } from "../../components/SideBar";
 import { Pagination } from "../../components/Pagination";
-import { useUsers } from "../../services/hooks/useUsers";
+import { getUsers, useUsers } from "../../services/hooks/useUsers";
 import { useState } from "react";
 import { queryClient } from "../../services/QueryClient";
 import { api } from "../../services/api";
+import { GetServerSideProps } from "next";
 
-export default function UsersList() {
+export default function UsersList({ users }) {
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useUsers(page);
+  const { data, isLoading, isFetching, error } = useUsers(page, {
+    initialData: users,
+  });
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -134,4 +137,14 @@ export default function UsersList() {
       </Flex>
     </Box>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { users } = await getUsers(1);
+
+  return {
+    props: {
+      users,
+    }
+  }
 }
