@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { Box, Flex, SimpleGrid, Text, theme } from '@chakra-ui/react';
 import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
+import { parseCookies } from 'nookies';
 
 import { Header } from "../components/Header";
 import { SideBar } from '../components/SideBar';
+import { api } from '../services/api';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -59,6 +62,14 @@ export default function Dashboard() {
       }
     }
   };
+
+  useEffect(() => {
+    const { 'dashgo.token': token } = parseCookies();
+
+    if (token) {
+      api.get('/me').then(response => console.log(response.data))
+    }
+  }, [])
 
   return (
     <Flex direction="column" h="100vh"> 
