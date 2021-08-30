@@ -8,13 +8,15 @@ interface ProfileProps {
 
 export function Profile({ showProfileData = true }: ProfileProps) {
   const { user } = useContext(AuthContext);
+  console.log(user);
+  
 
   return (
     <Flex align="center">
       {showProfileData && (
         <Box mr="4" textAlign="right">
           <Text>Lucas coronel</Text>
-          <Text color="gray.300" fontSize="small">{user.email}</Text>
+          <Text color="gray.300" fontSize="small">{user?.email}</Text>
         </Box>
       )}
       

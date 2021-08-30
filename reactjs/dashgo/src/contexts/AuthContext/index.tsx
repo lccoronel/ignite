@@ -1,11 +1,18 @@
 import { createContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { setCookie, parseCookies } from "nookies";
+import router, { useRouter } from "next/router";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 
 import { api } from "../../services/api";
 import { AuthContextData, AuthProviderProps, SignInCredentials, User } from "./types";
 
 export const AuthContext = createContext({} as AuthContextData)
+
+export function signOut() {
+  destroyCookie(undefined, 'dashgo.token')
+  destroyCookie(undefined, 'dashgo.refreshToken')
+
+  router.push('/')
+}
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const { push } = useRouter();
@@ -20,9 +27,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { email, permissions, roles } = response.data;
 
         setUser({ email, permissions, roles });
+      }).catch(() => {
+        signOut()
       })
     }
-  }, [])
+  }, [push])
 
   async function signIn({email, password}: SignInCredentials) {
     try {
